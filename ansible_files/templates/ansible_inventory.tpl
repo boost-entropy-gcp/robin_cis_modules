@@ -1,11 +1,3 @@
-
-##GKE Group with associated host vars
-#[gke_systems]
-## Must be in the form of <gke public IP> gke_url=<https URL of the endpoint>
-#${gcp_gke1_endpoint}  gke1_url=https://${gcp_gke1_endpoint}  gke_name=${gcp_gke1_cluster_name}
-#${gcp_gke2_endpoint}  gke2_url=https://${gcp_gke2_endpoint}  gke_name=${gcp_gke2_cluster_name}
-#${gcp_gke3_endpoint}  gke3_url=https://${gcp_gke3_endpoint}  gke_name=${gcp_gke3_cluster_name}
-
 #Robin node vars
 [robin_systems]
 ${gcp_robin1_endpoint}
