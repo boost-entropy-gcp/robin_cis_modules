@@ -19,6 +19,7 @@ terraform {
 resource "google_compute_disk" "robin_storage" {
   name            = "${var.name_prefix}-robin-storage"
   type            = "pd-standard"
+  zone            = var.zone
   size            = 80
 }
 
