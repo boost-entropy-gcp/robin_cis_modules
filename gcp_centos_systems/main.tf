@@ -21,6 +21,9 @@ resource "google_compute_disk" "robin_storage" {
   type            = "pd-standard"
   zone            = var.zone
   size            = 80
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 # -------------------------
