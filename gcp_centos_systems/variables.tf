@@ -14,7 +14,7 @@ variable "name_prefix" {
 }
 
 variable "subnetwork" {
-  description = "A reference (self_link) to the subnetwork to place the ubuntu in"
+  description = "A reference (self_link) to the subnetwork to place the centos in"
   type        = string
 }
 
@@ -24,17 +24,17 @@ variable "region" {
 }
 
 variable "zone" {
-  description = "The zone to create the ubuntu in. Must be within the subnetwork region."
+  description = "The zone to create the centos in. Must be within the subnetwork region."
   type        = string
 }
 
-variable "ubuntu_instance_type" {
+variable "centos_instance_type" {
   description = "The machine type of the instance."
   type        = string
 }
 
 variable "project" {
-  description = "The project to create the ubuntu in. Must match the subnetwork project."
+  description = "The project to create the centos in. Must match the subnetwork project."
   type        = string
 }
 
@@ -49,7 +49,7 @@ variable "app_tag_value" {
 # -------------------------
 
 variable "tag" {
-  description = "The GCP network tags to apply to the ubuntu for firewall rules."
+  description = "The GCP network tags to apply to the centos for firewall rules."
   type        = list
   default     = ["public", "public-restricted", "private"]
 }
@@ -68,7 +68,7 @@ variable "disk_size" {
 }
 
 variable "startup_script" {
-  description = "The script to be executed when the ubuntu starts. It can be used to install additional software and/or configure the host."
+  description = "The script to be executed when the centos starts. It can be used to install additional software and/or configure the host."
   type        = string
   default     = ""
 }
