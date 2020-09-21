@@ -66,6 +66,10 @@ resource "google_compute_instance" "centos" {
     }
   }
 
+  service_account {
+    scopes = ["cloud-platform"]
+  }
+
   metadata_startup_script  = var.startup_script
      
 }
