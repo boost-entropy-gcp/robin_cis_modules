@@ -42,6 +42,8 @@ resource "google_compute_instance" "centos" {
   # tag to use for applying firewall rules 
   tags = var.tag
 
+  allow_stopping_for_update = true
+
   boot_disk {
     initialize_params {
       image = var.source_image
