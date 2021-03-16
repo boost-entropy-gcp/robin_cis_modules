@@ -34,30 +34,30 @@ variable "bigip1_public_ip" {
   type        = string
 }
 
-variable "bigip2_public_ip" {
-  description = "The public IP the second F5 VM instance."
-  type        = string
-}
+// variable "bigip2_public_ip" {
+//   description = "The public IP the second F5 VM instance."
+//   type        = string
+// }
 
-variable "bigip3_public_ip" {
-  description = "The public IP the third F5 VM instance."
-  type        = string
-}
+// variable "bigip3_public_ip" {
+//   description = "The public IP the third F5 VM instance."
+//   type        = string
+// }
 
 variable "bigip1_private_ip" {
   description = "The private IP the first F5 VM instance."
   type        = string
 }
 
-variable "bigip2_private_ip" {
-  description = "The private IP the first F5 VM instance."
-  type        = string
-}
+// variable "bigip2_private_ip" {
+//   description = "The private IP the first F5 VM instance."
+//   type        = string
+// }
 
-variable "bigip3_private_ip" {
-  description = "The private IP the first F5 VM instance."
-  type        = string
-}
+// variable "bigip3_private_ip" {
+//   description = "The private IP the first F5 VM instance."
+//   type        = string
+// }
 
 #Centos Variables
 variable "robin1_endpoint" {

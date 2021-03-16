@@ -18,11 +18,11 @@ terraform {
 resource "local_file" "ansible_inventory_file" {
   content  = templatefile("./templates/ansible_inventory.tpl", {
     gcp_F51_public_ip                   = var.bigip1_public_ip
-    gcp_F52_public_ip                   = var.bigip2_public_ip
-    gcp_F53_public_ip                   = var.bigip3_public_ip
+    // gcp_F52_public_ip                   = var.bigip2_public_ip
+    // gcp_F53_public_ip                   = var.bigip3_public_ip
     gcp_F51_private_ip                  = var.bigip1_private_ip
-    gcp_F52_private_ip                  = var.bigip2_private_ip
-    gcp_F53_private_ip                  = var.bigip3_private_ip
+    // gcp_F52_private_ip                  = var.bigip2_private_ip
+    // gcp_F53_private_ip                  = var.bigip3_private_ip
     gcp_robin1_endpoint                 = var.robin1_endpoint
     gcp_robin2_endpoint                 = var.robin2_endpoint
     gcp_robin3_endpoint                 = var.robin3_endpoint
