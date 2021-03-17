@@ -68,6 +68,15 @@ resource "google_compute_instance" "centos" {
     }
   }
 
+ network_interface {
+    subnetwork = var.subnetwork2
+
+    # If var.static_ip is set use that IP, otherwise this will generate an ephemeral IP
+    access_config {
+      nat_ip = var.static_ip
+    }
+  }
+
   service_account {
     scopes = ["cloud-platform"]
   }

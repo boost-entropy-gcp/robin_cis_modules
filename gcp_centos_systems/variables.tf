@@ -18,6 +18,11 @@ variable "subnetwork" {
   type        = string
 }
 
+variable "subnetwork2" {
+  description = "A reference (self_link) to the subnetwork2 to place the centos in"
+  type        = string
+}
+
 variable "region" {
   description = "The region for provider"
   type        = string
