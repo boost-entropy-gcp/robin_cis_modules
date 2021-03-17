@@ -29,18 +29,6 @@ resource "google_compute_network" "vpc" {
   routing_mode = "REGIONAL"
 }
 
-# This network for the server side resources
-resource "google_compute_network" "vpc2" {
-  name    = "${var.name_prefix}-network2"
-  project = var.project
-
-  # Always define custom subnetworks
-  auto_create_subnetworks = "false"
-
-  # A global routing mode can have an unexpected impact on load balancers; always use a regional mode
-  routing_mode = "REGIONAL"
-}
-
 resource "google_compute_router" "vpc_router" {
   name    = "${var.name_prefix}-router"
   project = var.project
@@ -118,36 +106,6 @@ resource "google_compute_subnetwork" "vpc_subnetwork_private" {
     range_name = "private-services"
     ip_cidr_range = cidrsubnet(
       var.secondary_cidr_block,
-      var.secondary_cidr_subnetwork_width_delta,
-      1 * (1 + var.secondary_cidr_subnetwork_spacing)
-    )
-  }
-
-  log_config {
-    aggregation_interval = "INTERVAL_10_MIN"
-    flow_sampling        = 0.5
-    metadata             = "INCLUDE_ALL_METADATA"
-  }
-}
-
-# For server side subnetwork
-resource "google_compute_subnetwork" "vpc_subnetwork2_private" {
-  name    = "${var.name_prefix}-subnetwork2-private"
-  project = var.project
-  region  = var.region
-  # Specify the self link of the VPC network created earlier
-  network = google_compute_network.vpc2.self_link
-  private_ip_google_access = true
-  ip_cidr_range = cidrsubnet(
-    var.cidr2_block,
-    var.cidr_subnetwork_width_delta,
-    1 * (1 + var.cidr_subnetwork_spacing)
-  )
-
-  secondary_ip_range {
-    range_name = "private2-services"
-    ip_cidr_range = cidrsubnet(
-      var.secondary2_cidr_block,
       var.secondary_cidr_subnetwork_width_delta,
       1 * (1 + var.secondary_cidr_subnetwork_spacing)
     )
