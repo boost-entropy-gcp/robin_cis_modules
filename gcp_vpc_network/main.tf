@@ -117,19 +117,3 @@ resource "google_compute_subnetwork" "vpc_subnetwork_private" {
     metadata             = "INCLUDE_ALL_METADATA"
   }
 }
-
-# -------------------------
-# Peering between two networks. Both networks must create a peering with each other for the peering to be functional.
-# -------------------------
-
-resource "google_compute_network_peering" "peering1" {
-  name         = "robinpeering1"
-  network      = google_compute_network.vpc.id
-  peer_network = google_compute_network.vpc2.id
-  
-}
-resource "google_compute_network_peering" "peering2" {
-  name         = "robinpeering2"
-  network      = google_compute_network.vpc2.id
-  peer_network = google_compute_network.vpc.id
-}
