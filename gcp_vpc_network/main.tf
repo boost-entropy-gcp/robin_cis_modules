@@ -13,13 +13,25 @@ terraform {
 }
 
 # -------------------------
-# Create the Network & corresponding Router to attach other resources to
+# Create the Networks & corresponding Router to attach other resources to
 # Networks that preserve the default route are automatically enabled for Private Google Access to GCP services
 # provided subnetworks each opt-in; in general, Private Google Access should be the default.
 # -------------------------
 
 resource "google_compute_network" "vpc" {
   name    = "${var.name_prefix}-network"
+  project = var.project
+
+  # Always define custom subnetworks
+  auto_create_subnetworks = "false"
+
+  # A global routing mode can have an unexpected impact on load balancers; always use a regional mode
+  routing_mode = "REGIONAL"
+}
+
+# This network for the server side resources
+resource "google_compute_network" "vpc2" {
+  name    = "${var.name_prefix}-network2"
   project = var.project
 
   # Always define custom subnetworks
@@ -86,7 +98,7 @@ resource "google_compute_router_nat" "vpc_nat" {
 }
 
 # -------------------------
-# Private Subnetwork Config
+# Private Subnetwork Configs
 # -------------------------
 
 resource "google_compute_subnetwork" "vpc_subnetwork_private" {
@@ -118,5 +130,48 @@ resource "google_compute_subnetwork" "vpc_subnetwork_private" {
   }
 }
 
+# For server side subnetwork
+resource "google_compute_subnetwork" "vpc_subnetwork2_private" {
+  name    = "${var.name_prefix}-subnetwork2-private"
+  project = var.project
+  region  = var.region
+  # Specify the self link of the VPC network created earlier
+  network = google_compute_network.vpc2.self_link
+  private_ip_google_access = true
+  ip_cidr_range = cidrsubnet(
+    var.cidr2_block,
+    var.cidr_subnetwork_width_delta,
+    1 * (1 + var.cidr_subnetwork_spacing)
+  )
 
+  secondary_ip_range {
+    range_name = "private2-services"
+    ip_cidr_range = cidrsubnet(
+      var.secondary2_cidr_block,
+      var.secondary_cidr_subnetwork_width_delta,
+      1 * (1 + var.secondary_cidr_subnetwork_spacing)
+    )
+  }
 
+  log_config {
+    aggregation_interval = "INTERVAL_10_MIN"
+    flow_sampling        = 0.5
+    metadata             = "INCLUDE_ALL_METADATA"
+  }
+}
+
+# -------------------------
+# Peering between two networks. Both networks must create a peering with each other for the peering to be functional.
+# -------------------------
+
+resource "google_compute_network_peering" "peering1" {
+  name         = "robinpeering1"
+  network      = google_compute_network.vpc.id
+  peer_network = google_compute_network.vpc2.id
+  
+}
+resource "google_compute_network_peering" "peering2" {
+  name         = "robinpeering2"
+  network      = google_compute_network.vpc2.id
+  peer_network = google_compute_network.vpc.id
+}

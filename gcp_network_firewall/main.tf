@@ -42,6 +42,24 @@ resource "google_compute_firewall" "public_allow_all_inbound" {
   }
 }
 
+resource "google_compute_firewall" "public_allow_all_inbound2" {
+  name = "${var.name_prefix}-public-allow-ingress2"
+
+  project = var.project
+  network = var.network2
+
+  target_tags   = [local.public]
+  direction     = "INGRESS"
+  source_ranges = ["0.0.0.0/0"]
+
+  priority = "1000"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22", "8443", "29443"]
+  }
+}
+
 # -------------------------
 # public - allow ingress from specific sources
 # -------------------------
@@ -54,6 +72,26 @@ resource "google_compute_firewall" "public_restricted_allow_inbound" {
 
   project = var.project
   network = var.network
+
+  target_tags   = [local.public_restricted]
+  direction     = "INGRESS"
+  source_ranges = var.allowed_networks
+
+  priority = "1000"
+
+  allow {
+    protocol = "all"
+  }
+}
+
+resource "google_compute_firewall" "public_restricted_allow_inbound2" {
+
+  count = "${length(var.allowed_networks) > 0 ? 1 : 0}"
+
+  name = "${var.name_prefix}-public-restricted-allow-ingress2"
+
+  project = var.project
+  network = var.network2
 
   target_tags   = [local.public_restricted]
   direction     = "INGRESS"
@@ -94,6 +132,27 @@ resource "google_compute_firewall" "private_allow_all_network_inbound" {
   }
 }
 
+resource "google_compute_firewall" "private_allow_all_network_inbound2" {
+  name = "${var.name_prefix}-private-allow-ingress2"
+
+  project = var.project
+  network = var.network2
+
+  target_tags = [local.private]
+  direction   = "INGRESS"
+
+  source_ranges = [
+    var.priv_subnw_range2,
+    var.priv_subnw_range_scndry2,
+  ]
+
+  priority = "1000"
+
+  allow {
+    protocol = "all"
+  }
+}
+
 # -------------------------
 # private-persistence - allow ingress from `private` and `private-persistence` instances in this network
 # -------------------------
@@ -103,6 +162,25 @@ resource "google_compute_firewall" "private_allow_restricted_network_inbound" {
 
   project = var.project
   network = var.network
+
+  target_tags = [local.private_persistence]
+  direction   = "INGRESS"
+
+  # source_tags is implicitly within this network; tags are only applied to instances that rest within the same network
+  source_tags = [local.private, local.private_persistence]
+
+  priority = "1000"
+
+  allow {
+    protocol = "all"
+  }
+}
+
+resource "google_compute_firewall" "private_allow_restricted_network_inbound2" {
+  name = "${var.name_prefix}-allow-restricted-inbound2"
+
+  project = var.project
+  network = var.network2
 
   target_tags = [local.private_persistence]
   direction   = "INGRESS"

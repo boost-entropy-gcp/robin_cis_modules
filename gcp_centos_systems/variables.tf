@@ -83,3 +83,9 @@ variable "static_ip" {
   type        = string
   default     = null
 }
+
+variable "static_ip2" {
+  description = "A static IP address to attach to the instance. The default will allocate an ephemeral IP."
+  type        = string
+  default     = null
+}

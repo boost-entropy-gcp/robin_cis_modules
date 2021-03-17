@@ -73,7 +73,7 @@ resource "google_compute_instance" "centos" {
 
     # If var.static_ip is set use that IP, otherwise this will generate an ephemeral IP
     access_config {
-      nat_ip = var.static_ip
+      nat_ip = var.static_ip2
     }
   }
 

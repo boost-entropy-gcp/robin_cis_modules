@@ -38,6 +38,17 @@ variable "priv_subnw_range_scndry" {
   type        = string
 }
 
+#For second VPC network:
+variable "priv_subnw_range2" {
+  description = "Primary subnet range of the private subnetwork of the network2"
+  type        = string
+}
+
+variable "priv_subnw_range_scndry2" {
+  description = "Secondary subnet range of the private subnetwork of the network2"
+  type        = string
+}
+
 variable "name_prefix" {
   description = "A name prefix used in resource names to ensure uniqueness across a project."
   type        = string
