@@ -17,13 +17,13 @@ terraform {
 # -------------------------
 
 resource "google_compute_network_peering" "peering1" {
-  name         = "${var.prefix}-peering1"
+  name         = "${var.name_prefix}-peering1"
   network      = var.local_network
   peer_network = var.peer_network
   
 }
 resource "google_compute_network_peering" "peering2" {
-  name         = "${var.prefix}-peering2"
+  name         = "${var.name_prefix}-peering2"
   network      = var.peer_network
   peer_network = var.local_network
 }
