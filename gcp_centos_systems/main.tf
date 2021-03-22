@@ -35,6 +35,8 @@ resource "google_compute_instance" "centos" {
   name                = "${var.name_prefix}-centos"
   machine_type        = var.centos_instance_type
   zone                = var.zone
+  # Enable IP Forwarding
+  can_ip_forward = true
   # Instance labels to apply to the instance
   labels = {
     app = var.app_tag_value
