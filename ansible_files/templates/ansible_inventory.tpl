@@ -5,9 +5,9 @@ ${gcp_robin2_endpoint}
 ${gcp_robin3_endpoint}
 
 #F5 BIG-IP Group with associated host vars
-[F5_systems]
-# Must be in the form of <public IP> vs_ip=<private ip of the F5>
-${gcp_F51_public_ip} vs_ip=${gcp_F51_private_ip}  
+#[F5_systems]
+#Must be in the form of <public IP> vs_ip=<private ip of the F5>
+#${gcp_F51_public_ip} vs_ip=${gcp_F51_private_ip}  
 
 
 [robin_systems:vars]

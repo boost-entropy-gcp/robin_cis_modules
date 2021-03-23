@@ -29,10 +29,10 @@ variable "app_tag_value" {
 }
 
 # BIG-IP Variables
-variable "bigip1_public_ip" {
-  description = "The public IP the first F5 VM instance."
-  type        = string
-}
+// variable "bigip1_public_ip" {
+//   description = "The public IP the first F5 VM instance."
+//   type        = string
+// }
 
 // variable "bigip2_public_ip" {
 //   description = "The public IP the second F5 VM instance."
@@ -44,10 +44,10 @@ variable "bigip1_public_ip" {
 //   type        = string
 // }
 
-variable "bigip1_private_ip" {
-  description = "The private IP the first F5 VM instance."
-  type        = string
-}
+// variable "bigip1_private_ip" {
+//   description = "The private IP the first F5 VM instance."
+//   type        = string
+// }
 
 // variable "bigip2_private_ip" {
 //   description = "The private IP the first F5 VM instance."
